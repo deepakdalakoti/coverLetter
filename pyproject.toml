@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "coverletter"
+version = "0.1.0"
+description = ""
+authors = ["Deepak <deepakkdalakoti@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.8"
+fastapi = "^0.103.1"
+transformers = "^4.33.2"
+#https://stackoverflow.com/questions/76327419/valueerror-libcublas-so-0-9-not-found-in-the-system-path
+torch = ">=2.0.0, !=2.0.1"
+openai = "^0.28.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
