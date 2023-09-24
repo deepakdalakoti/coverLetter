@@ -10,11 +10,13 @@ RUN pip install poetry
 
 RUN poetry config virtualenvs.create false 
 
+RUN poetry config installer.max-workers 10
+
 COPY pyproject.toml poetry.lock /app/
 
 RUN poetry install --no-interaction --no-ansi --no-root
 
-COPY src/* /app/
+COPY src/ /app/
 
 ENV PYTHONPATH=/app/src
 
