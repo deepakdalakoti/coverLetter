@@ -70,7 +70,7 @@ level='info'
 # Streamlit app.
 
 # Default: true
-displayEnabled = false
+displayEnabled = true
 
 # Controls whether uncaught app exceptions and deprecation warnings
 # are displayed in the browser. By default, this is set to True and
