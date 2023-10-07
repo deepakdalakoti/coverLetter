@@ -48,6 +48,26 @@ class LLM:
         # print(response)
         return response["choices"][0]["message"]["content"]
 
+    def improve_output_openai(self, cv, jd, draft, user_instructions, **kwargs):
+        openai.api_key = os.getenv("OPENAI_API_KEY")
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo-16k",
+            messages=[
+                {
+                    "role": "system",
+                    "content": PromptText.UPDATE_PROMPT.format(cv, jd, draft),
+                },
+                {"role": "user", "content": user_instructions},
+            ],
+            temperature=kwargs.get("temperature", 0.5),
+            max_tokens=kwargs.get("max_new_tokens", 2000),
+            top_p=kwargs.get("top_p", 1.0),
+            frequency_penalty=0,
+            presence_penalty=0,
+        )
+        # print(response)
+        return response["choices"][0]["message"]["content"]
+
     def generate_output_hf(self, cv, jd, **kwargs):
         prompt = LLamaPrompt.generate_prompt(cv, jd)
         tokens = self.tokenizer(prompt, add_special_tokens=False, return_tensors="pt")

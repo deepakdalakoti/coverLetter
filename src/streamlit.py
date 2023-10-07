@@ -15,11 +15,26 @@ def generate():
         temp_file.write(file.getvalue())
         doc_parser = Parser()
         text = doc_parser.parse(file.name, temp_file.name)
+        # Save CV to reuse later
+        st.session_state["cv_text"] = text
         temp_file.close()
         output = LLM().generate_output(text, jd, **{"temperature": add_slider})
 
     st.session_state["generated_text"] = output
     st.write()
+
+
+def improve_cover_letter():
+    with st.spinner("Generating..."):
+        cv = st.session_state["cv_text"]
+        output = LLM().improve_output_openai(
+            cv, jd, draft, comments, **{"temperature": add_slider}
+        )
+
+    st.session_state["generated_text"] = output
+    st.write()
+
+    return
 
 
 st.set_page_config(page_title="Cover Letter")
@@ -35,5 +50,8 @@ jd = st.sidebar.text_area(label="Add job description")
 add_slider = st.sidebar.slider("Creativity", 0.0, 1.0, 0.2)
 action_button = st.sidebar.button("Generate", on_click=generate)
 
-placeholder = st.empty()
-placeholder.text_area(label="Generated Cover Letter", height=800, key="generated_text")
+container = st.container()
+
+draft = container.text_area(label="Cover Letter", height=600, key="generated_text")
+comments = container.text_area(label="Comments", height=100, key="comments")
+improve_button = st.button("Update", on_click=improve_cover_letter)

@@ -4,6 +4,11 @@ class PromptText:
       Fill the candidate name and other personal details from the CV where available. Also fill the company name if available in the job description. The cover should be written in a professional language"""
     USER_PROMPT = "The CV is \n{}\n. The job description is \n{}\n"
 
+    UPDATE_PROMPT = """You are given a CV of a candidate, a job description and a cover letter written for that
+     job by the candidate. Your job is to improve the cover letter based on the comments from the user. 
+      The CV is \n{}\n The job description is \n{}\n. The cover letter which needs to be improved is \n{}\n.
+       Improve this cover letter based on user's inputs """
+
 
 class LLamaPrompt:
     @staticmethod
